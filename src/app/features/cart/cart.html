@@ -1,0 +1,9 @@
+<div class="p-6">
+  <h2 class="text-xl font-bold mb-4">Cart</h2>
+
+  <div *ngFor="let c of cart$ | async" class="border p-3 mb-2">
+    {{ c.name }} x {{ c.qty }} = ₹{{ c.price * c.qty }}
+  </div>
+
+  <h3 class="font-bold mt-4">Total: ₹{{ cartService.total() }}</h3>
+</div>

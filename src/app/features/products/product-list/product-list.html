@@ -1,0 +1,93 @@
+<div class="grid grid-cols-1 md:grid-cols-12 gap-4 bg-slate-900 min-h-screen p-4">
+
+    <!-- Sidebar -->
+    <div class="md:col-span-3">
+        <app-sidebar class="block bg-slate-800 rounded-lg p-4 shadow-md" (categorySelected)="onCategoryChange($event)">
+        </app-sidebar>
+    </div>
+
+    <!-- Products Section -->
+    <div class="md:col-span-9">
+
+        <!-- Top Bar -->
+        <div
+            class="flex flex-col lg:flex-row lg:items-center lg:justify-between  mb-6 bg-slate-800 p-4 rounded-lg shadow">
+
+            <h2 class="text-xl lg:text-2xl font-bold text-indigo-400">
+                Products
+            </h2>
+
+            <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+
+                <!-- Search -->
+                <input [(ngModel)]="search" (input)="filter()" placeholder="Search products..." class="h-[44px] w-full px-3 rounded bg-slate-700 text-white
+               focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+
+                <!-- Category -->
+                <select [(ngModel)]="category" (change)="filter()" class="h-[44px] w-75 px-3 rounded bg-slate-700 text-white
+               focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <option value="">All</option>
+                    <option value="Men">Men</option>
+                    <option value="Women">Women</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Kids">Kids</option>
+                    <option value="Accessories">Accessories</option>
+                </select>
+
+                <!-- Sort -->
+                <div class="flex-1 ms-5 max-w-[420px]">
+                    <mat-form-field appearance="fill" class="w-50 h-16">
+                        <mat-label>Sort Price</mat-label>
+                        <mat-select (selectionChange)="sortPrice($event.value)">
+                            <mat-option value="low">Low → High</mat-option>
+                            <mat-option value="high">High → Low</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="hidden xl:block"></div>
+                <!-- Add Button -->
+                <button (click)="openAdd()" class="h-[44px] bg-indigo-600 hover:bg-indigo-700 text-white
+               px-4 rounded transition whitespace-nowrap">
+                    + Add Product
+                </button>
+
+            </div>
+        </div>
+
+        <!-- Product Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <app-product-card *ngFor="let product of paginatedProducts" [product]="product">
+            </app-product-card>
+        </div>
+
+        <!-- Pagination -->
+        <div class="flex justify-center gap-2 mt-8">
+            <button *ngFor="let page of pages" (click)="changePage(page)"
+                class="px-3 py-1 rounded border border-slate-600 text-slate-300 hover:bg-indigo-600 hover:text-white transition">
+                {{ page }}
+            </button>
+        </div>
+
+        <!-- Footer Controls -->
+        <div class="flex flex-col sm:flex-row justify-between items-center mt-6 gap-3 text-slate-400">
+
+            <div class="flex items-center gap-2">
+                <span>Show</span>
+                <select [(ngModel)]="itemsPerPage" (change)="changePageSize(itemsPerPage)"
+                    class="bg-slate-700 border border-slate-600 rounded px-2 py-1 text-white">
+                    <option *ngFor="let size of pageSizes" [value]="size">
+                        {{ size }}
+                    </option>
+                </select>
+                <span>entries</span>
+            </div>
+
+            <span>
+                Page {{ currentPage }} of {{ totalPages }}
+            </span>
+
+        </div>
+
+    </div>
+</div>

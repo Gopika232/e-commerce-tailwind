@@ -1,0 +1,14 @@
+<div class="bg-white p-4 rounded shadow w-64 min-h-screen">
+
+  <h3 class="font-bold mb-3 text-lg">Categories</h3>
+
+  <ul class="space-y-2">
+    <li
+      *ngFor="let category of categories"
+      (click)="selectCategory(category)"
+      class="cursor-pointer p-2 rounded hover:bg-blue-100"
+    >
+      {{ category }}
+    </li>
+  </ul>
+</div>
