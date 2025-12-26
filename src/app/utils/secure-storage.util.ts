@@ -1,8 +1,8 @@
-/* 🔐 Secure Local Storage Utility (AES-GCM) */
+/*Secure Local Storage Utility (AES-GCM) */
 
 const SECRET = 'e-commerce-secret-32bytes-key!';
 
-/* 🔑 Generate AES-GCM Key */
+/*Generate AES-GCM Key */
 async function getKey(): Promise<CryptoKey> {
   const hash = await crypto.subtle.digest(
     'SHA-256',
@@ -17,8 +17,7 @@ async function getKey(): Promise<CryptoKey> {
     ['encrypt', 'decrypt']
   );
 }
-
-/* 🔒 Encrypt Data */
+/*Encrypt Data */
 async function encryptData(data: any): Promise<string> {
   const key = await getKey();
   const iv = crypto.getRandomValues(new Uint8Array(12));
@@ -36,7 +35,7 @@ async function encryptData(data: any): Promise<string> {
   }));
 }
 
-/* 🔓 Decrypt Data */
+/*Decrypt Data */
 async function decryptData(cipher: string): Promise<any> {
   const parsed = JSON.parse(atob(cipher));
   const key = await getKey();
@@ -50,13 +49,12 @@ async function decryptData(cipher: string): Promise<any> {
   return JSON.parse(new TextDecoder().decode(decrypted));
 }
 
-/* 💾 Save to Local Storage */
+/* Save to Local Storage */
 export async function saveSecure(key: string, data: any) {
   const encrypted = await encryptData(data);
   localStorage.setItem(key, encrypted);
 }
-
-/* 📦 Load from Local Storage (with tamper detection) */
+/* Load from Local Storage*/
 export async function loadSecure(key: string) {
   const encrypted = localStorage.getItem(key);
   if (!encrypted) return null;
@@ -69,9 +67,7 @@ export async function loadSecure(key: string) {
     return null;
   }
 }
-
-
-/* 🗑 Remove Item */
+/*Remove Item */
 export function removeSecure(key: string) {
   localStorage.removeItem(key);
 }

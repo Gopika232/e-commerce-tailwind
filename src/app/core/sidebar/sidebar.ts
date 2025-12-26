@@ -9,11 +9,18 @@ import { CommonModule } from '@angular/common';
 })
 export class Sidebar {
 
-  categories: string[] = ['All', 'Men', 'Women', 'Electronics','Kids','Accessories'];
+  categories: string[] = ['All', 'Men', 'Women', 'Electronics', 'Kids', 'Accessories'];
 
   @Output() categorySelected = new EventEmitter<string>();
 
-  selectCategory(category: string) {
-    this.categorySelected.emit(category);
+  activeSection: 'categories' | 'lists' = 'categories';
+
+  showSection(section: 'categories' | 'lists') {
+    this.activeSection = section;
   }
+
+  selectCategory(category: string) {
+    console.log('Selected category:', category);
+  }
+
 }
