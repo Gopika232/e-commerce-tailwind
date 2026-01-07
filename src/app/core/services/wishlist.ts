@@ -15,14 +15,15 @@ export class WishlistService {
     this.init();
   }
 
-  private async init() {
-    if (!this.initialized) {
-      const stored = await loadSecure(this.storageKey);
-      this.wishlist = stored ?? [];
-      this.wishlist$.next([...this.wishlist]);
-      this.initialized = true;
-    }
+ private async init(): Promise<void> {
+  if (!this.initialized) {
+    const stored = await loadSecure(this.storageKey);
+    this.wishlist = stored ?? [];
+    this.wishlist$.next([...this.wishlist]);
+    this.initialized = true;
   }
+}
+
 
   private async save() {
     await saveSecure(this.storageKey, this.wishlist);
@@ -52,15 +53,15 @@ export class WishlistService {
     this.wishlist$.next([...this.wishlist]);
     await this.save();
   }
-
   /* Toggle Wishlist */
-  async toggle(product: Product) {
-    const exists = this.isInWishlist(product.id);
-    exists ? await this.remove(product.id) : await this.add(product);
-  }
-
+async toggle(product: Product) {
+  await this.init();
+  const exists = this.wishlist.some(p => p.id === product.id);
+  exists ? await this.remove(product.id) : await this.add(product);
+}
   /* Check if in Wishlist */
-  isInWishlist(productId: number): boolean {
-    return this.wishlist.some(p => p.id === productId);
-  }
+async isInWishlistAsync(productId: number): Promise<boolean> {
+  await this.init();
+  return this.wishlist.some(p => p.id === productId);
+}
 }

@@ -3,6 +3,7 @@ import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Navbar } from './core/navbar/navbar';
 import { Footer } from './core/footer/footer';
+import { Wishlist } from './features/wishlist/wishlist';
 
 @Component({
   selector: 'app-root',

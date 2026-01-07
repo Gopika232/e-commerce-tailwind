@@ -1,1 +1,10 @@
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
+  <app-product-card
+    *ngFor="let product of wishlistProducts"
+    [product]="product">
+  </app-product-card>
+</div>
 
+<div *ngIf="wishlistProducts.length === 0" class="text-center text-gray-500 mt-10">
+  No items in wishlist ❤️
+</div>

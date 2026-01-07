@@ -34,13 +34,16 @@ export class ProductCard {
       }
     });
   }
-  toggleWishlist(product: Product): void {
-    this.wishlistService.toggle(product);
-  }
+isWishlisted = false;
 
-  isWishlisted(product: Product): boolean {
-    return this.wishlistService.isInWishlist(product.id);
-  }
+async ngOnInit() {
+  this.isWishlisted = await this.wishlistService.isInWishlistAsync(this.product.id);
+}
+
+async toggleWishlist(product: Product) {
+  await this.wishlistService.toggle(product);
+  this.isWishlisted = await this.wishlistService.isInWishlistAsync(product.id);
+}
 
   delete(row: Product) {
     console.log('DELETE CLICKED:', row);

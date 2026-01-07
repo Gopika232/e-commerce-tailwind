@@ -20,4 +20,11 @@ export const routes: Routes = [
     path: '**',
     redirectTo: 'products',
   },
+  {
+  path: 'wishlist',
+  loadComponent: () =>
+    import('./features/wishlist/wishlist')
+      .then(m => m.Wishlist)
+}
+
 ];
